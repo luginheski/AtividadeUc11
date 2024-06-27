@@ -2,6 +2,13 @@
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
+<<<<<<< HEAD
+=======
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+>>>>>>> 52925884ed6b45ef2c6f7ac3a9350064d8da813f
 public class listagemVIEW extends javax.swing.JFrame {
 
     public listagemVIEW() {
