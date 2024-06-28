@@ -1,3 +1,4 @@
+import javax.swing.JOptionPane;
 
 public class cadastroVIEW extends javax.swing.JFrame {
 
@@ -149,6 +150,13 @@ public class cadastroVIEW extends javax.swing.JFrame {
         produto.setStatus(venda);
         
         resposta = produtodao.cadastrarProduto(produto);
+        if (resposta == 1){
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+            cadastroNome.setText("");
+            cadastroValor.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possivel cadastrar");
+        }
         
         }
         produtodao.desconectar();
