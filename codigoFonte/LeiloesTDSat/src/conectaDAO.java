@@ -1,7 +1,6 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 
@@ -10,18 +9,22 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 public class conectaDAO {
-
-    public Connection connectDB() {
-        Connection conn = null;
+  
+    
+    public Connection connectDB() {      
 
         try {
-
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=lorenteamo");
-
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/uc11", // linha de conexao
+                    "root", // usuario do mysql
+                    "lorenteamo"// senha do mysql
+            );
+            return conn;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + ex.getMessage());
+            return null;
         }
-        return conn;
     }
+
 
 }
