@@ -10,3 +10,6 @@ projeto cuja implementação já foi iniciada.
 - Utilizando JAVA
 - Git Basch
 - Mysql
+
+- No dia 27/06/2024
+- Foi codificado o botão de salvar e corrigido um bug no drive de conexão
