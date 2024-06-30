@@ -4,14 +4,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 public class ProdutosDAO {
 
     //Connection conn;
     //PreparedStatement prep;
     ResultSet resultset;
-    ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-    
+        
     private conectaDAO conexao;
     private Connection conn;
     
@@ -49,11 +50,31 @@ public class ProdutosDAO {
         }
     }
 
-    public ArrayList<ProdutosDTO> listarProdutos() {
+    public List<ProdutosDTO> listarProdutos() {
         
-        
-
-        return listagem;
+        try{
+            List<ProdutosDTO> listagem = new ArrayList<>();
+            
+            String sqlFiltro = "SELECT * FROM produtos";
+            
+            PreparedStatement st = conn.prepareStatement(sqlFiltro);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()){
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setValor(rs.getInt("valor"));
+                produto.setStatus(rs.getString("status"));
+                
+                listagem.add(produto);
+            }
+            
+            return listagem;
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "erro ao conectar" + ex);
+            return null;
+        }   
     }
 
 }
