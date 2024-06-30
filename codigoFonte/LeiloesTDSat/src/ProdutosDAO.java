@@ -77,7 +77,7 @@ public class ProdutosDAO {
         }   
     }
     
-    public int venderProduto(ProdutosDTO produto, int id){
+    public int venderProduto(ProdutosDTO produto, String id){
         int status;
         
         try{
@@ -85,7 +85,7 @@ public class ProdutosDAO {
             
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, produto.getStatus());
-            st.setInt(2, produto.getId());
+            st.setString(2, id);
             status = st.executeUpdate();
             
             return status;

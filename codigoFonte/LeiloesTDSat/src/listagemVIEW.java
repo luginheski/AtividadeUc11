@@ -128,7 +128,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        int id = Integer.valueOf(id_produto_venda.getText());
+        String id = id_produto_venda.getText();
         ProdutosDAO produtosdao = new ProdutosDAO();
         ProdutosDTO produto = new ProdutosDTO();
         boolean status;
@@ -137,15 +137,15 @@ public class listagemVIEW extends javax.swing.JFrame {
         produto.setStatus("Vendido");
         
         status = produtosdao.conectar();
-        
+        if(id.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Selecione um ID");
+        }else{
         if (status == false){
             JOptionPane.showMessageDialog(null, "Erro ao conectar");
         } else {
            resposta = produtosdao.venderProduto(produto, id);
             if (resposta == 1) {
-                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");
-                
-                
+                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");                
             } else if (resposta == 1062) {
                 JOptionPane.showMessageDialog(null, "Matricula já foi cadastrada");
             } else {
@@ -154,6 +154,8 @@ public class listagemVIEW extends javax.swing.JFrame {
         }
         produtosdao.desconectar();
         listarProdutos();
+        id_produto_venda.setText("");
+        }
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
