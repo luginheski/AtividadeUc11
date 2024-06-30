@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -127,11 +128,31 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-
+        int id = Integer.valueOf(id_produto_venda.getText());
         ProdutosDAO produtosdao = new ProdutosDAO();
-
-        //produtosdao.venderProduto(Integer.parseInt(id));
+        ProdutosDTO produto = new ProdutosDTO();
+        boolean status;
+        int resposta;
+        
+        produto.setStatus("Vendido");
+        
+        status = produtosdao.conectar();
+        
+        if (status == false){
+            JOptionPane.showMessageDialog(null, "Erro ao conectar");
+        } else {
+           resposta = produtosdao.venderProduto(produto, id);
+            if (resposta == 1) {
+                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");
+                
+                
+            } else if (resposta == 1062) {
+                JOptionPane.showMessageDialog(null, "Matricula já foi cadastrada");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar dados");
+            } 
+        }
+        produtosdao.desconectar();
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 

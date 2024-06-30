@@ -76,5 +76,24 @@ public class ProdutosDAO {
             return null;
         }   
     }
+    
+    public int venderProduto(ProdutosDTO produto, int id){
+        int status;
+        
+        try{
+            String sql = "UPDATE produtos SET status = ? WHERE id = ?";
+            
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setString(1, produto.getStatus());
+            st.setInt(2, produto.getId());
+            status = st.executeUpdate();
+            
+            return status;
+        }catch(SQLException ex){
+            System.out.println("Erro ao alterar status " + ex.getMessage());
+            return ex.getErrorCode();
+        }
+    }
+
 
 }
