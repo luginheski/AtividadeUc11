@@ -50,7 +50,7 @@ public class ProdutosDAO {
         }
     }
 
-    public List<ProdutosDTO> listarProdutos() {
+    public List<ProdutosDTO> listarProdutos(String termoBusca) {
         
         try{
             List<ProdutosDTO> listagem = new ArrayList<>();
@@ -58,6 +58,15 @@ public class ProdutosDAO {
             String sqlFiltro = "SELECT * FROM produtos";
             
             PreparedStatement st = conn.prepareStatement(sqlFiltro);
+            
+            if(termoBusca.equals(true)){
+                st.setString(1, "%" + termoBusca + "%");
+            }
+            
+            if(termoBusca.equals(0)){
+                sqlFiltro = sqlFiltro + " WHERE status LIKE ?";
+            }
+            
             ResultSet rs = st.executeQuery();
             
             while (rs.next()){
