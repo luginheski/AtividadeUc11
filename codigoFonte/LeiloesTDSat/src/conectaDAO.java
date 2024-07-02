@@ -17,7 +17,7 @@ public class conectaDAO {
             Connection conn = DriverManager.getConnection(
                     "jdbc:mysql://localhost/uc11", // linha de conexao
                     "root", // usuario do mysql
-                    "lorenteamo"// senha do mysql
+                    "mysql"// senha do mysql
             );
             return conn;
         } catch (Exception ex) {
