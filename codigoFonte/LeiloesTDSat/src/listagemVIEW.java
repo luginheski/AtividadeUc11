@@ -8,12 +8,11 @@ import javax.swing.table.DefaultTableModel;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 public class listagemVIEW extends javax.swing.JFrame {
 
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        listarProdutos("");
     }
 
     @SuppressWarnings("unchecked")
@@ -132,28 +131,28 @@ public class listagemVIEW extends javax.swing.JFrame {
         ProdutosDTO produto = new ProdutosDTO();
         boolean status;
         int resposta;
-        
+
         produto.setStatus("Vendido");
-        
+
         status = produtosdao.conectar();
-        if(id.isEmpty()){
+        if (id.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione um ID");
-        }else{
-        if (status == false){
-            JOptionPane.showMessageDialog(null, "Erro ao conectar");
         } else {
-           resposta = produtosdao.venderProduto(produto, id);
-            if (resposta == 1) {
-                JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");                
-            } else if (resposta == 1062) {
-                JOptionPane.showMessageDialog(null, "Matricula já foi cadastrada");
+            if (status == false) {
+                JOptionPane.showMessageDialog(null, "Erro ao conectar");
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar dados");
-            } 
-        }
-        produtosdao.desconectar();
-        listarProdutos();
-        id_produto_venda.setText("");
+                resposta = produtosdao.venderProduto(produto, id);
+                if (resposta == 1) {
+                    JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso");
+                } else if (resposta == 1062) {
+                    JOptionPane.showMessageDialog(null, "Matricula já foi cadastrada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao tentar atualizar dados");
+                }
+            }
+            produtosdao.desconectar();
+            listarProdutos("");
+            id_produto_venda.setText("");
         }
     }//GEN-LAST:event_btnVenderActionPerformed
 
@@ -214,16 +213,16 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos() {
+    private void listarProdutos(String filtro) {
         ProdutosDAO produtosdao = new ProdutosDAO();
-        boolean status = produtosdao.conectar();
+        boolean status;
+        status = produtosdao.conectar();
         try {
-            
 
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
 
-            List<ProdutosDTO> listagem = produtosdao.listarProdutos("");
+            List<ProdutosDTO> listagem = produtosdao.listarProdutos(filtro);
 
             for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
@@ -232,10 +231,10 @@ public class listagemVIEW extends javax.swing.JFrame {
                     listagem.get(i).getValor(),
                     listagem.get(i).getStatus()
                 });
-               
+
             }
         } catch (Exception e) {
         }
-
+        produtosdao.desconectar();
     }
 }
